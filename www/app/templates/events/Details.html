@@ -1,0 +1,25 @@
+<ion-view cache-view="true" view-title="Event" name="eventdetail-view">
+
+    <ion-pane  style="background-color: #FFFFFF">
+
+        <ion-content scroll="true">
+
+            <ion-refresher pulling-icon="ion-arrow-down-b" on-refresh="PullRefresher(row.post_id)">
+            </ion-refresher>
+
+            <section>
+                <div class="col no-padding" style="margin: -20px 0; padding:0;">
+                    <img class="full-image" src="{{surl}}{{row.post_image}}">
+                </div>
+                <div class="row padding-top">
+                    <div class="col padding">
+                        <h4>{{row.post_title}}</h4>
+                        <p ng-if="row.post_date"><a href="#" class="subdued" style="font-size: 12px;"> <i class="icon ion-clock"></i> {{row.post_date|timeAgo}}</a></p>
+                        <p ng-bind-html="row.post_description" ng-class="fontSize"></p>
+                    </div>
+                </div>
+            </section>
+        </ion-content>
+
+    </ion-pane>
+</ion-view>

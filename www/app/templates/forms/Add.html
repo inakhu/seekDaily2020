@@ -1,0 +1,37 @@
+<form name="HTSSignup">
+    <ion-view view-title="Book Appointment" cache-view="false">
+        <ion-content class="padding">
+
+            <div class="row responsive-sm padding remvoeBP">
+                <div class="col">
+                    <div class="list">
+
+                        <h4 class="text-center">Want to have a discussion with the church management? Book an appointment right away.</h4>
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label">Name</span>
+                            <input type="text" ng-model="data.name" name="name" placeholder="Enter your name" required="required">
+                        </label>
+
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label">Phone</span>
+                            <input type="text" ng-model="data.phone" name="phone" placeholder="Enter your phone number" required="required">
+                        </label>
+
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label">Email</span>
+                            <input type="email" ng-model="data.email" name="email" placeholder="example@gmail.com" required="required">
+                        </label>
+
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label">Reason for appointment</span>
+                            <textarea ng-model="data.message" rows="10" name="message" placeholder="Description appointment details"></textarea>
+                        </label>
+                    </div>
+
+                    <div class="loginButton"><button class="button ion-person button-block button-calm" ng-click="ProcessForm()"> Submit </button>  </div>
+                </div>
+            </div>
+
+        </ion-content>
+    </ion-view>
+</form>

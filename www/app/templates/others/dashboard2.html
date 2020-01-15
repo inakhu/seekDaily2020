@@ -1,0 +1,102 @@
+<ion-view cache-view="false" view-title="Seek Daily 2020" name="dashboard-view">
+
+	<!--<ion-pane  style="background-color: #1A84B0">-->
+	<ion-pane  style="background-color: #ffffff">
+		<ion-content scroll="true">
+			<section>
+				<div class="row">
+
+					<div class="col text-center ui-gradient-deepblue padding">
+						<span ng-if="weekNumber>1"><button ng-click="previous()" class="button button-calm ion-ios-rewind"></button></span>
+						<button class="button button-light">{{newDate|date:"MMMM dd, yyyy"}}</button>
+						<span ng-if="weekNumber<52"><button ng-click="next()" class="button  button-calm ion-ios-fastforward"> </button></span>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col text-center card calm-bg">
+						<a href="#/app/dashboard/{{row.appDate| date: 'yyyy-MM-dd'}}" class="item item-icon-left">
+							<i class="icon ion-ios-book dark"></i>
+							<h2><span class="dark">Seek Daily</span></h2>
+							<p><span class="dark" style="font-weight: bold; font-size: 16px;">Read today's Message</span></p>
+						</a>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col padding text-center">
+						<div class="list">
+							<div class="item item-icon-left" ion-datetime-picker date ng-model="row.appDate" style="background-color:#ffffff; cursor:pointer;">
+								<i class="icon ion-ios-calendar light"></i>
+								Glossary: Tap to pick a date
+								<strong>{{row.appDate|date:"MMMM dd, yyyy"}}</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div ng-if="row.appDate" class="row">
+					<div class="col padding text-center">
+						<a class="button ion-search button-calm" href="#/app/dashboard/{{row.appDate| date: 'yyyy-MM-dd'}}">{{row.appDate|date:"MMMM dd, yyyy"}} </a>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col text-center card calm-bg">
+						<a ui-sref="tab.notes" class="item item-icon-left">
+							<i class="icon ion-compose dark"></i>
+							<h2><span class="dark">NotePad</span></h2>
+							<p><span class="dark" style=" font-weight: bold; font-size: 16px;">Take notes</span></p>
+						</a>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col text-center card calm-bg">
+						<a ui-sref="tab.todos" class="item item-icon-left">
+							<i class="icon ion-clipboard dark"></i>
+							<h2><span class="dark">To do list</span></h2>
+							<p><span class="dark" style="font-weight: bold; font-size: 16px;">List out your to do</span></p>
+						</a>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col text-center card calm-bg">
+						<a ui-sref="app.prayer" class="item item-icon-left">
+							<i class="icon ion-email dark"></i>
+							<h2><span class="dark">Prayer Request</span></h2>
+							<p><span class="dark" style="font-weight: bold; font-size: 16px;">Submit your prayer request</span></p>
+						</a>
+					</div>
+				</div>
+
+
+
+			</section>
+		</ion-content>
+
+
+		<!--Modal-->
+		<script id="templates/modal.html" type="text/ng-template">
+			<ion-modal-view>
+
+				<ion-header-bar class="bar-calm fix-buttons">
+					<a class="button" ng-click="closeModal()"><i class="icon ion-ios-undo"></i> Back</a>
+					<h1 class="title" style="text-transform: capitalize;">Seek Daily 2020</h1>
+				</ion-header-bar>
+
+				<ion-content has-bouncing="true">
+					<div class="row col padding">
+						<!--<h4 style="text-transform: capitalize; text-align: center">{{newDate|date:"EEEE dd, MMMM"}}</h4>-->
+						<h4 style="text-transform: capitalize; text-align: center">Week {{weekNumber}}</h4>
+						<h4 style="text-transform: capitalize; text-align: center">{{current.title}}</h4>
+						<p style="text-align: justify; font-size: 16px; line-height:25px; padding: 5px 15px 5px 15px;" ng-bind-html="current.message"></p>
+					</div>
+				</ion-content>
+
+			</ion-modal-view>
+		</script>
+
+
+	</ion-pane>
+</ion-view>

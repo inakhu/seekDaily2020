@@ -1,0 +1,36 @@
+<ion-view cache-view="true" view-title="News" name="headline-view">
+	<ion-pane  style="background-color: #FFFFFF">
+		<ion-content scroll="true">
+			<ion-refresher pulling-icon="ion-arrow-down-b" on-refresh="PullRefresher()">
+			</ion-refresher>
+			<section  ng-repeat="latest in featured">
+				<div class="col no-padding" style="margin: -20px 0; padding:0;">
+					<img class="full-image" src="{{surl}}{{latest.post_image}}">
+				</div>
+				<div class="row">
+					<a href="#/app/news/{{latest.post_id}}" class="subdued padding-top" style="font-size: 12px;">
+						<div class="col padding">
+							<h4>{{latest.post_title}}</h4>
+							<p class="subdued" style="font-size: 12px;"> <i class="icon ion-clock"></i> {{latest.post_date|timeAgo}}</p>
+						</div>
+					</a>
+				</div>
+			</section>
+			<div class="list">
+				<a ng-repeat="row in news" class="item item-thumbnail-left item-text-wrap" href="#/app/news/{{row.post_id}}" style="margin-bottom:-15px">
+					<img ng-if="row.post_image" src="{{surl}}{{row.post_image}}" style="height: 65px;">
+					<h2>{{row.post_title}}</h2>
+					<p class="subdued padding-top" style="font-size: 12px;"><i class="icon ion-clock"></i> {{row.post_date|timeAgo}}</p>
+				</a>
+			</div>
+		</ion-content>
+		<ion-footer-bar class="bar bar-balanced" ng-if="advert.post_title">
+			<!--<div class="col" style="margin: -12px; background-image: url('{{surl}}{{advert.post_image}}');"><p class="text-center calm-bg padding">{{advert.post_title}}</p></div>-->
+			<div class="col text-center">
+				<a class="light" style="font-size: 16px;" href="#/app/advert/{{advert.post_id}}">
+					<p>{{advert.post_title}}</p>
+				</a>
+			</div>
+		</ion-footer-bar>
+	</ion-pane>
+</ion-view>

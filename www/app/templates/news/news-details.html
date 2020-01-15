@@ -1,0 +1,60 @@
+<ion-view cache-view="true" view-title="News" name="dashboard-view">
+
+	<!--<ion-nav-buttons side="right">
+		<a class="button button-icon icon ion-bookmark" ng-click="storeBookmark(row.post_id)"></a>
+	</ion-nav-buttons>-->
+
+	<!--<ion-nav-buttons side="right">
+		<button ng-click="share()" class="light bar-button ion-android-share-alt"></button>
+	</ion-nav-buttons>-->
+
+	<ion-pane  style="background-color: #FFFFFF">
+
+		<ion-content scroll="true">
+
+			<ion-refresher pulling-icon="ion-arrow-down-b" on-refresh="PullRefresher(row.post_id)">
+			</ion-refresher>
+
+			<section>
+				<div class="col no-padding" style="margin: -20px 0; padding:0;">
+					<img class="full-image" src="{{surl}}{{row.post_image}}">
+				</div>
+				<div class="row padding-top">
+					<div class="col padding">
+						<h4>{{row.post_title}}</h4>
+						<p ng-if="row.post_date"><a href="#" class="subdued" style="font-size: 12px;"> <i class="icon ion-clock"></i> {{row.post_date|timeAgo}}</a></p>
+						<p ng-bind-html="main_message" ng-class="fontSize"></p>
+					</div>
+				</div>
+			</section>
+
+			<section>
+				<div class="col padding-bottom">
+					<!--<button class="button" ng-click="shareAnywhere()">Share anywhere</button>-->
+				</div>
+			</section>
+		</ion-content>
+
+		<!--<div class="tabs-striped tabs-color-light tabs-background-assertive" style="padding: 0">
+			<div class="tabs">
+				<a class="tab-item"  ng-click="decrease()" style="color: white">
+					<i class="icon ion-minus-round"></i>
+					Decrease
+				</a>
+				<a class="tab-item" ng-click="increase()" style="color: white">
+					<i class="icon ion-plus-round"></i>
+					Increase
+				</a>
+			</div>
+		</div>-->
+
+		<ion-footer-bar class="bar bar-balanced" ng-if="advert.post_title">
+			<div class="col text-center">
+				<a class="light" style="font-size: 16px;" href="#/app/advert/{{advert.post_id}}">
+					<p>{{advert.post_title}}</p>
+				</a>
+			</div>
+		</ion-footer-bar>
+
+	</ion-pane>
+</ion-view>

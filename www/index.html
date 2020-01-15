@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+  <title></title>
+
+  <link href="app/lib/ionic/css/ionic.min.css" rel="stylesheet">
+  <link href="app/lib/filterbar/ionic.filter.bar.min.css" rel="stylesheet">
+  <link href="app/lib/datetimepicker/ion-datetime-picker.min.css" rel="stylesheet">
+  <link href="app/lib/floatingmenu/ion-floating-menu.min.css" rel="stylesheet">
+  <link href="app/assets/css/custom-app.css" rel="stylesheet">
+
+  <!-- ionic/angularjs js -->
+  <script src="app/lib/ionic/js/ionic.bundle.min.js"></script>
+  <script src="app/lib/loadash/lodash.min.js"></script>
+  <script src="app/lib/ngcordova/ng-cordova.min.js"></script>
+  <script src="app/lib/ngStorage/ngStorage.min.js"></script>
+  <script src="app/lib/filterbar/ionic.filter.bar.min.js"></script>
+  <script src="app/lib/select/ionic-modal-select.min.js"></script>
+  <script src="app/lib/datetimepicker/ion-datetime-picker.min.js"></script>
+  <script src="app/lib/floatingmenu/ion-floating-menu.min.js"></script>
+  <script src="app/lib/time-ago/angular-timeago.min.js"></script>
+  <script src="app/lib/ngStorage/ngStorage.min.js"></script>
+
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
+
+  <!-- your app's js -->
+  <script src="app/app.js"></script>
+  <script src="app/services/HTSconstants.js"></script>
+  <script src="app/controllers/controllers.js"></script>
+  <script src="app/controllers/UsersCtrl.js"></script>
+  <script src="app/controllers/NotePad.js"></script>
+  <script src="app/services/HTSservices.js"></script>
+  <script src="app/controllers/NewsCtrl.js"></script>
+  <script src="app/controllers/EventsCtrl.js"></script>
+  <script src="app/controllers/FormsCtrl.js"></script>
+</head>
+
+<body ng-app="HezecomApp">
+
+<ion-nav-bar class="bar-calm">
+  <ion-nav-back-button>
+  </ion-nav-back-button>
+</ion-nav-bar>
+
+<ion-nav-view></ion-nav-view>
+
+<script id="add-list.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">New task list</h1>
+      <div class="button button-clear" ng-click="closeModal()"><span class="icon ion-ios-close-empty"></span></div>
+    </ion-header-bar>
+    <ion-content>
+      <div class="list">
+        <label class="item item-input">
+          <input type="hidden" ng-model="list.id" >
+          <span class="input-label">Title</span>
+          <input type="text" ng-model="list.name">
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Pick Color
+          </div>
+          <select name="color" ng-model="list.color">
+            <option ng-repeat="color in colores" value="{{color}}" class="{{color}}">{{color}}</option>
+          </select>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Comment</span>
+          <textarea ng-model="list.comment"></textarea>
+        </label>
+        <button class="button button-block button-calm" ng-click="add(list)">
+          Add
+        </button>
+      </div>
+    </ion-content>
+  </ion-modal-view>
+</script>
+<script id="add-note.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">New note</h1>
+      <div class="button button-clear" ng-click="closeModal()"><span class="icon ion-ios-close-empty"></span></div>
+    </ion-header-bar>
+    <ion-content>
+      <div class="list">
+        <label class="item item-input">
+          <input type="hidden" ng-model="note.id" >
+          <span class="input-label">Title</span>
+          <input type="text" ng-model="note.title" placeholder="Title of your note">
+        </label>
+        <label class="item item-input input-textarea">
+          <textarea ng-model="note.content" rows="10"></textarea>
+        </label>
+        <button class="button button-block button-calm" ng-click="add(note)">
+          Add Note
+        </button>
+      </div>
+    </ion-content>
+  </ion-modal-view>
+</script>
+<script id="add-todo.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">Add Items</h1>
+      <div class="button button-clear" ng-click="closeModal()"><span class="icon ion-ios-close-empty"></span></div>
+    </ion-header-bar>
+    <ion-content>
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="To do List" ng-model="todo.name">
+        </label>
+        <button class="button button-block button-calm" ng-click="addTodo(listid, todo)">
+          Add
+        </button>
+      </div>
+    </ion-content>
+  </ion-modal-view>
+</script>
+<script id="note-detail.html" type="text/ng-template">
+  <ion-view view-title="{{note.title}}">
+    <ion-nav-buttons side="right">
+      <button class="button button-calm" ng-click="save()">
+        Save
+      </button>
+    </ion-nav-buttons>
+    <ion-content>
+      <div class="list">
+        <label class="item item-input">
+          <input type="hidden" ng-model="note.id" >
+          <span class="input-label">Title</span>
+          <input type="text" ng-model="note.title" value="{{note.title}}">
+        </label>
+        <label class="item item-input input-textarea">
+          <textarea ng-model="note.content" rows="10" value="{{note.content}}"></textarea>
+        </label>
+      </div>
+    </ion-content>
+  </ion-view>
+</script>
+<script id="tab-notes.html" type="text/ng-template">
+  <ion-view view-title="Notes">
+    <ion-nav-buttons side="right">
+      <button class="button button-calm" ng-click="openModal()">
+        <i class="icon ion-android-add-circle"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="left">
+      <button class="button button-calm" ui-sref="app.dashboard">
+        <i class="icon ion-navicon"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-content>
+      <ion-list>
+        <ion-item class="notes" ng-repeat="note in $storage.notes" ng-class="todo.color" type="item-text-wrap" href="#/tab/notes/{{note.id}}">
+          <h2>{{note.title}}</h2>
+          <p>{{note.content}}</p>
+          <ion-option-button class="button-assertive" ng-click="del(note)">
+            <i class="icon ion-trash-b"></i>
+          </ion-option-button>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script id="tab-options.html" type="text/ng-template">
+  <ion-view view-title="Options">
+    <ion-content>
+      <ion-list>
+        <ion-item class="item item-icon-right" ng-click="resetDB()">
+          Clear All Tasks and Notes
+          <i class="icon ion-trash-b"></i>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script id="tab-todos.html" type="text/ng-template">
+  <ion-view view-title="To do List">
+    <ion-nav-buttons side="right">
+      <button class="button button-calm" ng-click="openModal()">
+        <i class="icon ion-android-add-circle"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="left">
+      <button class="button button-calm" ui-sref="app.dashboard">
+        <i class="icon ion-navicon"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-content>
+      <ion-list>
+        <ion-item class="item-remove-animate" ng-repeat="todo in $storage.todos" ng-class="todo.color" type="item-text-wrap" href="#/tab/todos/{{todo.id}}">
+          <h2>{{todo.name}}</h2>
+          <p>{{todo.comment}}</p>
+          <ion-option-button class="button-assertive" ng-click="del(todo)">
+            <i class="icon ion-trash-b"></i>
+          </ion-option-button>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script id="tabs.html" type="text/ng-template">
+
+  <ion-tabs class="tabs-icon-top tabs-color-active-royal">
+    <ion-tab title="Todo" icon-off="ion-clipboard" icon-on="ion-clipboard" href="#/tab/todos">
+      <ion-nav-view name="tab-todos"></ion-nav-view>
+    </ion-tab>
+    <ion-tab title="NotePad" icon-off="ion-compose" icon-on="ion-compose" href="#/tab/notes">
+      <ion-nav-view name="tab-notes"></ion-nav-view>
+    </ion-tab>
+  </ion-tabs>
+</script>
+
+<script id="todo-list.html" type="text/ng-template">
+  <ion-view view-title="{{todolist.name}}">
+    <ion-nav-buttons side="right">
+      <button class="button button-calm" ng-click="openModal()">
+        <i class="icon ion-android-add-circle"></i>
+      </button>
+    </ion-nav-buttons>
+    <!-- <ion-nav-buttons side="left">
+       <button class="button" ui-sref="app.dashboard">
+         <i class="icon ion-navicon"></i>
+       </button>
+     </ion-nav-buttons>-->
+    <ion-content>
+      <ion-list>
+        <ion-item class="" ng-repeat="todo in todolist.todos" type="item-text-wrap" ng-class="{'isDone': isDone}" ng-click="done(todolist.id, todo.id)">
+          <h2>{{todo.name}}</h2>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-view>
+</script>
+
+</body>
+</html>
