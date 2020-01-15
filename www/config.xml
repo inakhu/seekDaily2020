@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.hezecom.baptistdis2020" version="1.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" versionCode="3">
+<widget id="com.hezecom.baptistseekdaily2020" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" versionCode="4">
     <name>Seek Daily 2020</name>
     <description>
         Seek Daily 2020 for Baptist Convention.
